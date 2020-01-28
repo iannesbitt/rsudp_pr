@@ -81,7 +81,7 @@ class Tweeter(Thread):
 					imgdetails = d.decode('utf-8').split(' ')
 					imgtime = RS.UTCDateTime.strptime(imgdetails[1], '%Y-%m-%dT%H:%M:%S.%fZ')
 					event_time = imgtime.strftime(self.fmt)
-					message = 'Seismic event recorded by the #UpwardBound #RaspberryShake #School #Seismic Network in #PuertoRico. Image of possible #earthquake detected at %s on @raspishake station %s.%s in %s region. #STEMeducation in action! ➡️ https://raspberryshake.net/stationview/#?net=%s&sta=%s' % (event_time, RS.net, RS.stn, self.region, RS.net, RS.stn)
+					message = 'Seismic event recorded by the #UpwardBound #RaspberryShake #School #Seismic Network in #PuertoRico. Image of possible #earthquake detected at %s on @raspishake station %s.%s in %s region. #STEMeducation in action!' % (event_time, RS.net, RS.stn, self.region, RS.net, RS.stn)
 					response = None
 					print()
 					if os.path.exists(imgdetails[2]):
