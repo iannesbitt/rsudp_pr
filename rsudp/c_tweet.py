@@ -24,7 +24,7 @@ class Tweeter(Thread):
 		self.alive = True
 		self.tweet_images = tweet_images
 		self.fmt = '%Y-%m-%d %H:%M:%S UTC'
-		self.region = ' - region: %s' % RS.region.title() if RS.region else ''
+		self.region = '%s' % RS.region.title() if RS.region else ''
 
 		if q:
 			self.queue = q
@@ -41,7 +41,6 @@ class Tweeter(Thread):
 			access_token_secret
 		)
 		self.message0 = '(#RaspberryShake station %s.%s%s) Event detected at' % (RS.net, RS.stn, self.region)
-		self.message1 = '(#RaspberryShake station %s.%s%s) Image of event detected at' % (RS.net, RS.stn, self.region)
 
 		printM('Starting.', self.sender)
 	
@@ -66,7 +65,7 @@ class Tweeter(Thread):
 			if 'ALARM' in str(d):
 				event_time = RS.UTCDateTime.strptime(d.decode('utf-8'), 'ALARM %Y-%m-%dT%H:%M:%S.%fZ')
 				self.last_event_str = event_time.strftime(self.fmt)
-				message = '%s %s' % (self.message0, self.last_event_str)
+				message = 'Seismic event recorded by the #UpwardBound #School #Seismic Network in #PuertoRico. Possible #earthquake detected at %s on @raspishake station %s.%s in %s region. #STEMeducation in action! Live feed ➡️ https://raspberryshake.net/stationview/#?net=%s&sta=%s' % (self.last_event_str, RS.net, RS.stn, self.region, RS.net, RS.stn)
 				response = None
 				try:
 					printM('Sending tweet...', sender=self.sender)
@@ -82,7 +81,8 @@ class Tweeter(Thread):
 				if self.tweet_images:
 					imgdetails = d.decode('utf-8').split(' ')
 					imgtime = RS.UTCDateTime.strptime(imgdetails[1], '%Y-%m-%dT%H:%M:%S.%fZ')
-					message = '%s %s' % (self.message1, imgtime.strftime(self.fmt))
+					event_time = imgtime.strftime(self.fmt)
+					message = 'Seismic event recorded by the #UpwardBound #RaspberryShake #School #Seismic Network in #PuertoRico. Image of possible #earthquake detected at %s on @raspishake station %s.%s in %s region. #STEMeducation in action! ➡️ https://raspberryshake.net/stationview/#?net=%s&sta=%s' % (event_time, RS.net, RS.stn, self.region, RS.net, RS.stn)
 					response = None
 					print()
 					if os.path.exists(imgdetails[2]):
