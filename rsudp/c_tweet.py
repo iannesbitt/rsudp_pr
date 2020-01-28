@@ -40,7 +40,6 @@ class Tweeter(Thread):
 			access_token,
 			access_token_secret
 		)
-		self.message0 = '(#RaspberryShake station %s.%s%s) Event detected at' % (RS.net, RS.stn, self.region)
 
 		printM('Starting.', self.sender)
 	
